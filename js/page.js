@@ -4,17 +4,23 @@ var pscore_span=document.getElementById('pscore');
 var oscore_span=document.getElementById('oscore');
 var scoreboard_div=document.querySelector('.scoreboard');
 const result_div=document.querySelector(".result >p");
-const rock_img=document.getElementById('r-img');
-const paper_img=document.getElementById('p-img');
-const scissors_img=document.getElementById('s-img');
+const rock=document.getElementById('rock');
+const paper=document.getElementById('paper');
+const scissors=document.getElementById('scissors');
 
 const imgs = ["svg/rock.svg", "svg/paper.svg", "svg/scissors.svg"];
 
-
+function reset(){
+  pscore=0;
+  oscore=0;
+  pscore_span.innerHTML = pscore;
+  oscore_span.innerHTML=oscore;
+  display_result("Choose a move to play!");
+}
 function getOpponentChoice() {
-  const choices=['r-img','p-img','s-img'];
+  const choices=['rock','paper','scissors'];
   const randomNumber= Math.floor(Math.random() *3);
-  document.getElementById("o-img").src = imgs[randomNumber];
+  document.getElementById("question").src = imgs[randomNumber];
   return choices[randomNumber];
 }
 
@@ -30,14 +36,13 @@ function lose(){
   oscore_span.innerHTML=oscore;
 }
 
-
 function game(pchoice){
   const ochoice=getOpponentChoice();
   if (pchoice === ochoice) {
     return("This game is a tie!");
   }
-  else if (pchoice === "r-img") {
-    if (ochoice === "p-img") {
+  else if (pchoice === "rock") {
+    if (ochoice === "paper") {
       lose();
       return("Paper beats Rock. You lose.");
     } else {
@@ -45,8 +50,8 @@ function game(pchoice){
       return("Rock wins! You win!");
     }
   }
-  else if (pchoice === "p-img") {
-    if (ochoice ==="s-img") {
+  else if (pchoice === "paper") {
+    if (ochoice ==="scissors") {
       lose();
       return("Scissors beats Paper. You lose.");
     } else {
@@ -54,8 +59,8 @@ function game(pchoice){
       return("Paper wins! You win!");
     }
   }
-  else if (pchoice === "s-img") {
-    if (ochoice === "r-img") {
+  else if (pchoice === "scissors") {
+    if (ochoice === "rock") {
       lose();
       return("Rock beats scissors. You lose.");
     } else {
@@ -70,14 +75,14 @@ function display_result(text) {
 }
 
 function main() {
-  rock_img.addEventListener('click', function(){
-    display_result(game("r-img"));
+  rock.addEventListener('click', function(){
+    display_result(game("rock"));
   })
-  paper_img.addEventListener('click', function(){
-    display_result(game("p-img"));
+  paper.addEventListener('click', function(){
+    display_result(game("paper"));
   })
-  scissors_img.addEventListener('click', function(){
-    display_result(game("s-img"));
+  scissors.addEventListener('click', function(){
+    display_result(game("scissors"));
   })
   console.log("main done");
 
