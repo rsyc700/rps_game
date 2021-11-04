@@ -1,14 +1,14 @@
 var pscore=0;
 var oscore=0;
-const pscore_span=document.getElementById('pscore');
-const oscore_span=document.getElementById('oscore');
-const scoreboard_div=document.querySelector('.scoreboard');
-const result_div=document.querySelector(".result");
+var pscore_span=document.getElementById('pscore');
+var oscore_span=document.getElementById('oscore');
+var scoreboard_div=document.querySelector('.scoreboard');
+const result_div=document.querySelector(".result >p");
 const rock_img=document.getElementById('r-img');
 const paper_img=document.getElementById('p-img');
 const scissors_img=document.getElementById('s-img');
 
-const imgs = ["svg/paper.svg", "svg/rock.svg", "svg/scissors.svg"];
+const imgs = ["svg/rock.svg", "svg/paper.svg", "svg/scissors.svg"];
 
 
 function getOpponentChoice() {
@@ -18,36 +18,52 @@ function getOpponentChoice() {
   return choices[randomNumber];
 }
 
+function win(){
+  pscore++;
+  pscore_span.innerHTML = pscore;
+  oscore_span.innerHTML=oscore;
+}
+
+function lose(){
+  oscore++;
+  pscore_span.innerHTML = pscore;
+  oscore_span.innerHTML=oscore;
+}
+
 
 function game(pchoice){
   const ochoice=getOpponentChoice();
-  console.log("pchoice", pchoice, "ochoice", ochoice);
   if (pchoice === ochoice) {
     return("This game is a tie!");
   }
   else if (pchoice === "r-img") {
     if (ochoice === "p-img") {
-      return("Paper Wins! You lose.");
+      lose();
+      return("Paper beats Rock. You lose.");
     } else {
+      win();
       return("Rock wins! You win!");
     }
   }
   else if (pchoice === "p-img") {
     if (ochoice ==="s-img") {
-      return("Scissors wins! You lose.");
+      lose();
+      return("Scissors beats Paper. You lose.");
     } else {
+      win();
       return("Paper wins! You win!");
     }
   }
   else if (pchoice === "s-img") {
     if (ochoice === "r-img") {
-      return("Rock wins! You lose.");
+      lose();
+      return("Rock beats scissors. You lose.");
     } else {
+      win();
       return("Scissors wins! You win!");
     }
   }
 }
-
 
 function display_result(text) {
   document.getElementById('result').innerText = text;
