@@ -3,10 +3,19 @@ var oscore=0;
 var pscore_span=document.getElementById('pscore');
 var oscore_span=document.getElementById('oscore');
 var scoreboard_div=document.querySelector('.scoreboard');
-const result_div=document.querySelector(".result >p");
+var result_div=document.querySelector(".result >p");
 const rock=document.getElementById('rock');
 const paper=document.getElementById('paper');
 const scissors=document.getElementById('scissors');
+
+
+
+
+/*if (window.sessionStorage){
+  var pscore_span=document.getElementById('pscore');
+  var oscore_span=document.getElementById('oscore');
+  pscore.value=sessionStorage.getItem('pscore');
+  oscore.value=sessionStorage.getItem('oscore');*/
 
 const imgs = ["svg/rock.svg", "svg/paper.svg", "svg/scissors.svg"];
 
@@ -26,14 +35,16 @@ function getOpponentChoice() {
 
 function win(){
   pscore++;
-  pscore_span.innerHTML = pscore;
-  oscore_span.innerHTML=oscore;
 }
 
 function lose(){
   oscore++;
+}
+
+function display_score() {
   pscore_span.innerHTML = pscore;
   oscore_span.innerHTML=oscore;
+
 }
 
 function game(pchoice){
@@ -71,10 +82,30 @@ function game(pchoice){
 }
 
 function display_result(text) {
+  save_score();
+  display_score();
   document.getElementById('result').innerText = text;
 }
 
+function save_score() {
+  sessionStorage.setItem("oscore", oscore.toString());
+  sessionStorage.setItem("pscore", pscore.toString());
+}
+
+function load_score() {
+  var _o = sessionStorage.getItem("oscore");
+  if(_o !== null) {
+    oscore = parseInt(_o);
+  var _o = sessionStorage.getItem("pscore");
+  if (_o !==null) {
+    pscore = parseInt(_o);
+  }
+  }
+  display_score();
+}
+
 function main() {
+  load_score();
   rock.addEventListener('click', function(){
     display_result(game("rock"));
   })
